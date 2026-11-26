@@ -1,15 +1,15 @@
 function Teams(){
     return(
         <list>
-            <ol>
+            <ul>
                 Team 1
-            </ol>
-            <ol>
+            </ul>
+            <ul>
                 Team 2
-            </ol>
-            <ol>
+            </ul>
+            <ul>
                 Team 3
-            </ol>
+            </ul>
         </list>
     )
 }
