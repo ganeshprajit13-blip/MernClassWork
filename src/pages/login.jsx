@@ -1,29 +1,54 @@
-import { useState } from "react";
+import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-function Login(){
-    const[formdata,setFormdata]=useState({user:"",pass:""})
+function Login() {
 
-    const print = (e)=>{
+    //const [email, setEmail] = useState("")
+    //const [password, setPassword] = useState("")
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const[logindata,setFormdata] = useState({
+        username:"",
+        password:""
+    })
+
+    function handleChange(e){
         e.preventDefault();
-        console.log(formdata)
-    };
-function handlechange(e){
-    e.preventDefault();
-    setFormdata({...formdata,[e.target.name]:e.target.value})
-}
-    return( 
-    <>
-    <form className="flex flex-col" onSubmit={print} >
-        <label>Email </label>
-        <input placeholder="Enter username" required type="text" name="user" onChange={handlechange} />
-    
-        <label>Password </label>
-        <input placeholder="Enter Password" required type="password" name="pass" onChange={handlechange} />
+        setFormdata({
+            ...logindata,
+            [e.target.name]:e.target.value
+        })
+    }
 
-        <button type="submit">Submit</button>
-    </form>
- 
-    </>
-    );
+    const handlesubmit = (event) => {
+        event.preventDefault()
+        const registerdata = location.state
+        console.log("login data",logindata)
+        console.log("register data",registerdata)
+        if(logindata.username == registerdata.name && logindata.password == registerdata.password){
+            navigate("./dashboard",{
+                state:logindata
+            })
+        }else{
+            console.log("Invalid Credentials")
+
+        }
+    }
+
+    return (
+        <div>
+            <h1>Login Page</h1><br></br>
+
+            <form onSubmit={handlesubmit}>
+                <input type="text" placeholder="Enter username" name="username" onChange={handleChange}/>
+                <br /><br />
+                <input type="password" placeholder="Enter password" name="password" onChange={handleChange} />
+                <br /><br />
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    )
 }
-export default Login;
+
+export default Login
